@@ -48,47 +48,63 @@ function LoadVimBundles()
     set rtp+=~/.vim/bundle/vundle/
     call vundle#rc()
 
-    " Vundle Manager
+    " 包管理器
     Plugin 'gmarik/vundle'
-    Plugin 'tpope/vim-Pluginr'
 
-    Plugin 'thoughtbot/vim-rspec'
+    " 状态栏增强
+    Plugin 'Lokaltog/vim-powerline'
+    Plugin 'vim-airline/vim-airline-themes'
+    " 主题
+    Plugin 'flazz/vim-colorschemes'
+
+    " 写作模式
+    Plugin 'junegunn/goyo.vim'
+
+    " 文本搜索，grep加强
     Plugin 'ack.vim'
-    Plugin 'comments.vim'
+    Plugin 'rking/ag.vim'
+
+    " 文件浏览
     Plugin 'ctrlp.vim'
     Plugin 'scrooloose/nerdtree'
     Plugin 'scrooloose/nerdcommenter'
-    Plugin 'rspec.vim'
+    Plugin 'yegappan/mru'
+
+    " 自动补全
+    Plugin 'ervandew/supertab'
+    Plugin 'Valloric/YouCompleteMe'
+    Plugin 'SirVer/ultisnips'
     Plugin 'honza/vim-snippets'
+
+    " 快速移动光标
+    Plugin 'Lokaltog/vim-easymotion'
+    
+    " 注释代码
+    Plugin 'comments.vim'
+    
+    " 语法检测（貌似只针对C/C++）
     Plugin 'scrooloose/syntastic'
+
     Plugin 'kchmck/vim-coffee-script'
-    Plugin 'flazz/vim-colorschemes'
     Plugin 'tpope/vim-fugitive'
     Plugin 'tpope/vim-haml'
-    Plugin 'tpope/vim-rails'
+
+    " JavaScript
     Plugin 'pangloss/vim-javascript'
     Plugin 'jelera/vim-javascript-syntax'
+
     Plugin 'briancollins/vim-jst'
+    " markdown
     Plugin 'plasticboy/vim-markdown'
-    Plugin 'Lokaltog/vim-powerline'
-    Plugin 'vim-ruby/vim-ruby'
-    Plugin 'slim-template/vim-slim'
     Plugin 'sudo.vim'
     Plugin 'xml.vim'
     Plugin 'ZenCoding.vim'
-    " vim缩进提示线
-    " Plugin 'nathanaelkane/vim-indent-guides'
     Plugin 'Yggdroot/indentLine'
 
-    Plugin 'junegunn/goyo.vim'
     Plugin 'junegunn/limelight.vim'
 
     Plugin 'vim-scripts/Mark--Karkat'
-    " 导致CtabRedoIndent错误
-    " Plugin 'vim-scripts/Smart-Tabs'
     Plugin 'vim-scripts/TagHighlight'
-    " Plugin 'vim-scripts/mru.vim'
-    Plugin 'yegappan/mru'
 
     " Plugin 'drmingdrmer/xptemplate'
     Plugin 'wesleyche/SrcExpl'
@@ -97,18 +113,12 @@ function LoadVimBundles()
     Plugin 'tpope/vim-surround'
     Plugin 'tpope/vim-repeat'
 
-    Plugin 'ervandew/supertab'
-    Plugin 'Valloric/YouCompleteMe'
-    Plugin 'SirVer/ultisnips'
-
-    Plugin 'Lokaltog/vim-easymotion'
     Plugin 'mtth/locate.vim'
     Plugin 'godlygeek/tabular'
     Plugin 'jiangmiao/auto-pairs'
     Plugin 'reedes/vim-colors-pencil'
     Plugin 'reedes/vim-pencil'
     Plugin 'bling/vim-airline'
-    Plugin 'vim-airline/vim-airline-themes'
 
     Plugin 'xolox/vim-misc'
     Plugin 'xolox/vim-easytags'
@@ -119,7 +129,6 @@ function LoadVimBundles()
 
     Plugin 'zyqhi/vim-emacs-bindings'
     Plugin 'sjl/gundo.vim'
-    Plugin 'rking/ag.vim'
 
     Plugin 'dag/vim2hs'
     Plugin 'msanders/cocoa.vim'
@@ -133,7 +142,6 @@ endfunction
 
 call LoadBasicSettings()
 call LoadVimBundles()
-
 
 " make YCM compatible with UltiSnips (using supertab)
 let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
@@ -175,7 +183,7 @@ map <leader>tm :tabmove
 "let loaded_nerd_tree = 1
 let NERDTreeQuitOnOpen = 1
 let NERDChristmasTree=1
-let g:NERDTreeWinSize = 18 
+let g:NERDTreeWinSize = 30 
 map <leader>f :NERDTreeToggle<CR>
 
 "switch window
@@ -241,14 +249,6 @@ imap <D-2> <Esc>:tabnext<CR>i
 "scss,sass
 au BufRead,BufNewFile *.scss set filetype=scss
 au BufRead,BufNewFile *.sass set filetype=scss
-
-"coffee script
-" au BufNewFile,BufReadPost *.coffee setl foldmethod=indent nofoldenable
-" au BufNewFile,BufReadPost *.coffee setl shiftwidth=2 expandtab
-" hi link coffeeSpaceError NONE
-" hi link coffeeSemicolonError NONE
-" hi link coffeeReservedError NONE
-" map <leader>cf :CoffeeCompile watch vert<cr>
 
 "let skim use slim syntax
 au BufRead,BufNewFile *.skim set filetype=slim
