@@ -1,0 +1,32 @@
+"set colortheme
+"colorscheme  autumn
+
+"colorscheme blackboard
+"colorscheme asu1dark
+
+
+"把gvim的菜单和工具栏隐藏掉,按F2可调出,再按隐藏  
+set guioptions-=m  
+set guioptions-=T  
+map <silent> <F2> :if &guioptions =~# 'T' <Bar>  
+            \set guioptions-=T <Bar>  
+            \set guioptions-=m <bar>  
+            \else <Bar>  
+            \set guioptions =T <Bar>  
+            \set guioptions =m <Bar>  
+            \endif<CR>  
+
+" 启动gvim时窗口的大小  
+set lines=34 columns=120 
+" set transparency=10
+
+" set fileencodings=utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
+
+" set font
+set guifont=Monaco:h12
+" 设置宽字体，防止中文乱码
+" set guifontwide=Georgia:h12
+
+" set powerline
+let g:Powerline_symbols = 'fancy'
+
