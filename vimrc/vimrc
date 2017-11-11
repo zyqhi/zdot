@@ -3,6 +3,9 @@
 function LoadBasicSettings()
     syntax enable               " enable syntax processing
 
+    " allow backspacing over everything in insert mode
+    set backspace=indent,eol,start
+    
     " Spaces and Tabs
     set tabstop=4               " number of visual spaces per TAB
     set softtabstop=4           " number of spaces in tab when editing
@@ -166,7 +169,7 @@ autocmd FileType ruby compiler ruby
 "autocmd vimenter * if !argc() | NERDTree | endif
 "autocmd VimEnter * NER
 
-let g:vim_markdown_folding_disabled = 0
+let g:vim_markdown_folding_disabled = 1
 
 "set my leader
 let mapleader=","
@@ -185,6 +188,7 @@ let NERDTreeQuitOnOpen = 1
 let NERDChristmasTree=1
 let g:NERDTreeWinSize = 30 
 map <leader>f :NERDTreeToggle<CR>
+map <leader>j :NERDTreeFind<CR>
 
 "switch window
 :map <leader>w <C-W>w
@@ -266,6 +270,7 @@ autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType python nnoremap <buffer> <F5> :exec '!python' shellescape(@%, 1)<cr>
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 " Enable heavy omni completion.
@@ -439,7 +444,9 @@ map <leader>s :w<CR>
 
 
 function LoadTheme()
-    colorscheme Monokai
+    " 两个主题混在一起才好看
+    " colorscheme Monokai
+    colorscheme pencil
 endfunction
 
 call LoadTheme()
