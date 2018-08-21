@@ -55,8 +55,8 @@ function LoadVimBundles()
     Plugin 'gmarik/vundle'
 
     " 状态栏增强
-    Plugin 'Lokaltog/vim-powerline'
-    Plugin 'vim-airline/vim-airline-themes'
+    " Plugin 'Lokaltog/vim-powerline'
+    " Plugin 'vim-airline/vim-airline-themes'
     " 主题
     Plugin 'flazz/vim-colorschemes'
 
@@ -121,7 +121,8 @@ function LoadVimBundles()
     Plugin 'jiangmiao/auto-pairs'
     Plugin 'reedes/vim-colors-pencil'
     Plugin 'reedes/vim-pencil'
-    Plugin 'bling/vim-airline'
+    " Plugin 'bling/vim-airline'
+    Plugin 'vim-airline/vim-airline'
 
     Plugin 'xolox/vim-misc'
     Plugin 'xolox/vim-easytags'
@@ -130,7 +131,6 @@ function LoadVimBundles()
     Plugin 'Shougo/vimshell.vim'
     Plugin 'Shougo/vimproc.vim'
 
-    Plugin 'zyqhi/vim-emacs-bindings'
     Plugin 'sjl/gundo.vim'
 
     Plugin 'dag/vim2hs'
@@ -140,6 +140,8 @@ function LoadVimBundles()
     Plugin 'keith/swift.vim'
 
     Plugin 'suan/vim-instant-markdown'
+
+    Plugin 'nightsense/snow'
 
 endfunction
 
@@ -348,25 +350,25 @@ let g:EasyMotion_leader_key = '<Space>'
 let g:locate_max_height = 20
 
 " airline设置
-set laststatus=2
+" set laststatus=2
 " 使用powerline打过补丁的字体，gui下会导致中文乱码
-" if !has('gui_running')
-    " let g:airline_powerline_fonts = 1
-" endif
+if !has('gui_running')
+    let g:airline_powerline_fonts = 1
+endif
 
 " 开启tabline
 " let g:airline#extensions#tabline#enabled = 1
 " tabline中当前buffer两端的分隔字符
-let g:airline#extensions#tabline#left_sep = ' '
+" let g:airline#extensions#tabline#left_sep = ' '
 " tabline中未激活buffer两端的分隔字符
-let g:airline#extensions#tabline#left_alt_sep = '|'
+" let g:airline#extensions#tabline#left_alt_sep = '|'
 " tabline中buffer显示编号
-let g:airline#extensions#tabline#buffer_nr_show = 1
+" let g:airline#extensions#tabline#buffer_nr_show = 1
 " 映射切换buffer的键位
 nnoremap [b :bp<CR>
 nnoremap ]b :bn<CR>
 " airline theme
-let g:airline_theme='dark'
+" let g:airline_theme='dark'
 
 "" 自动注释
 set formatoptions+=r
@@ -446,7 +448,13 @@ map <leader>s :w<CR>
 function LoadTheme()
     " 两个主题混在一起才好看
     " colorscheme Monokai
-    colorscheme pencil
+    " colorscheme pencil
+    if strftime('%H') >= 7 && strftime('%H') < 19
+        set background=light
+    else
+        set background=dark
+    endif
+    colorscheme snow 
 endfunction
 
 call LoadTheme()
