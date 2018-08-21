@@ -55,8 +55,9 @@ function LoadVimBundles()
     Plugin 'gmarik/vundle'
 
     " 状态栏增强
-    " Plugin 'Lokaltog/vim-powerline'
-    " Plugin 'vim-airline/vim-airline-themes'
+    Plugin 'vim-airline/vim-airline'
+    Plugin 'vim-airline/vim-airline-themes'
+    
     " 主题
     Plugin 'flazz/vim-colorschemes'
 
@@ -121,8 +122,6 @@ function LoadVimBundles()
     Plugin 'jiangmiao/auto-pairs'
     Plugin 'reedes/vim-colors-pencil'
     Plugin 'reedes/vim-pencil'
-    " Plugin 'bling/vim-airline'
-    Plugin 'vim-airline/vim-airline'
 
     Plugin 'xolox/vim-misc'
     Plugin 'xolox/vim-easytags'
@@ -450,8 +449,10 @@ function LoadTheme()
     " colorscheme Monokai
     " colorscheme pencil
     if strftime('%H') >= 7 && strftime('%H') < 19
+        let g:airline_theme='badwolf'
         set background=light
     else
+        let g:airline_theme='alduin'
         set background=dark
     endif
     colorscheme snow 
