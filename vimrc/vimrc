@@ -2,6 +2,7 @@
 
 function LoadBasicSettings()
     syntax enable               " enable syntax processing
+    set nocompatible            " be iMproved
 
     " allow backspacing over everything in insert mode
     set backspace=indent,eol,start
@@ -36,11 +37,9 @@ function LoadBasicSettings()
     set fenc=utf-8  
     " 设置文件编码检测类型及支持格式  
     set fencs=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
-
     "忽略大小写查找
     set ic
 
-    set nocompatible               " be iMproved
     filetype off                   " required!
     filetype indent on " load filetype-specific indent files
     filetype plugin indent on
@@ -60,6 +59,7 @@ function LoadVimBundles()
     
     " 主题
     Plugin 'flazz/vim-colorschemes'
+    Plugin 'ayu-theme/ayu-vim'
 
     " 写作模式
     Plugin 'junegunn/goyo.vim'
@@ -456,6 +456,9 @@ function LoadTheme()
         set background=dark
     endif
     colorscheme snow 
+    " set termguicolors
+    " let ayucolor="dark"
+    " colorscheme ayu
 endfunction
 
 call LoadTheme()
