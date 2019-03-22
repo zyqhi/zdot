@@ -446,7 +446,7 @@ map <leader>s :w<CR>
 
 function LoadTheme()
     " 两个主题混在一起才好看
-    " colorscheme Monokai
+    colorscheme Monokai
     " colorscheme pencil
     if strftime('%H') >= 7 && strftime('%H') < 19
         let g:airline_theme='badwolf'
@@ -455,7 +455,7 @@ function LoadTheme()
         let g:airline_theme='alduin'
         set background=dark
     endif
-    colorscheme snow 
+    " colorscheme snow 
     " set termguicolors
     " let ayucolor="dark"
     " colorscheme ayu

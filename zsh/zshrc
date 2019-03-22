@@ -85,6 +85,10 @@ alias ll='exa -lh'
 alias ls='exa -G'
 alias lsa='exa -lah'
 alias cat='bat'
+alias b='brew'
+alias bs='brew search'
+alias bi='brew install'
+alias bo='brew info'
 
 # my zsh setting
 # Get color support for 'less'
@@ -108,5 +112,8 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 # POWERLEVEL9K_MODE='nerdfont-complete'
 export PATH="/usr/local/opt/openssl/bin:$PATH"
 export PATH="/usr/local/opt/curl/bin:$PATH"
+export NODE_PATH=/usr/local/lib/node_modules
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+eval $(thefuck --alias)
