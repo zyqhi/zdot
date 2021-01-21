@@ -1,8 +1,8 @@
  " It's where it all began.
 
 function BasicSettings()
-    syntax enable               " enable syntax processing
-    set nocompatible            " be iMproved
+    syntax enable               " Enable syntax processing
+    set nocompatible            " Be iMproved
 
     " Allow backspacing over everything in insert mode
     set backspace=indent,eol,start
@@ -37,17 +37,8 @@ function BasicSettings()
     set completeopt=menu,menuone
 
     filetype off                   " required!
-    filetype indent on " load filetype-specific indent files
+    filetype indent on " Load filetype-specific indent files
     filetype plugin indent on
-
-    " automatic Dart file type detection
-    au BufRead,BufNewFile *.dart set filetype=dart
-    "scss,sass
-    au BufRead,BufNewFile *.scss set filetype=scss
-    au BufRead,BufNewFile *.sass set filetype=scss
-
-    "let skim use slim syntax
-    au BufRead,BufNewFile *.skim set filetype=slim
 endfunction
 
 function KeybindingsRemapping()
@@ -64,10 +55,82 @@ function KeybindingsRemapping()
     vmap <leader>c :w !pbcopy<CR><CR> 
 endfunction
 
+function PluginManager()
+    " Automatic installation
+    if empty(glob('~/.vim/autoload/plug.vim'))
+        silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+                    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+    endif
+    
+    call plug#begin("~/.vim/plugged")
+    " 延迟按需加载，使用到命令的时候再加载或者打开对应文件类型才加载
+
+    " File explore
+    "" A tree explorer plugin for vim.
+    Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+    "" Full path fuzzy file, buffer, mru, tag, ... finder for Vim.
+    Plug 'ctrlpvim/ctrlp.vim'
+    "" Most Recently Used (MRU) Vim plugin
+    Plug 'yegappan/mru'
+	
+	" Syntax highligth
+	"" Enhanced C and C++ syntax highlighting
+ 	Plug 'bfrg/vim-cpp-modern'
+
+    " Auto complete
+    "" A code-completion engine for Vim 
+    Plug 'ycm-core/YouCompleteMe'
+
+    call plug#end()
+endfunction
+
+function NERDTreeConfig()
+    let NERDTreeQuitOnOpen=1
+    let NERDChristmasTree=1
+    let g:NERDTreeWinSize=30
+    map <leader>f :NERDTreeToggle<CR>
+    map <leader>j :NERDTreeFind<CR>
+endfunction
+
+function CtrlPConfig()
+    :map <leader>rf :CtrlPMRUFiles<CR>
+endfunction
+
+function MRUConfig()
+endfunction
+
+function YouCompleteMeConfig()
+    let g:ycm_add_preview_to_completeopt=0
+    let g:ycm_show_diagnostics_ui=0
+    let g:ycm_server_log_level='info'
+    let g:ycm_min_num_identifier_candidate_chars=2
+    let g:ycm_collect_identifiers_from_comments_and_strings=1
+    let g:ycm_complete_in_strings=1
+    let g:ycm_key_invoke_completion='<c-z>'
+    set completeopt=menu,menuone
+
+    noremap <c-z> <NOP>
+
+    let g:ycm_semantic_triggers={
+                \ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
+                \ 'cs,lua,javascript': ['re!\w{2}'],
+                \ }
+endfunction
+
+function PlugConfig()
+    call NERDTreeConfig()
+    call CtrlPConfig()
+    call MRUConfig()
+    call YouCompleteMeConfig()
+endfunction
+
 " It's where it all beagn.
 function Main()
     call BasicSettings()
     call KeybindingsRemapping()
+    call PluginManager()
+    call PlugConfig()
 endfunction
 
 call Main()
