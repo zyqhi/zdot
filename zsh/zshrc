@@ -6,7 +6,7 @@ export ZSH=$HOME/.oh-my-zsh
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
 # ZSH_THEME="powerlevel9k/powerlevel9k"
-ZSH_THEME="robbyrussell"
+# ZSH_THEME="robbyrussell"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -113,7 +113,36 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 export PATH="/usr/local/opt/openssl/bin:$PATH"
 export PATH="/usr/local/opt/curl/bin:$PATH"
 export NODE_PATH=/usr/local/lib/node_modules
+export DYLD_LIBRARY_PATH=/usr/local/opt/unicorn/lib/:$DYLD_LIBRARY_PATH
+export DYLD_LIBRARY_PATH=/usr/local/opt/capstone/lib/:$DYLD_LIBRARY_PATH
+# Theos
+export THEOS=/opt/theos
+export PATH="$THEOS/bin:$PATH"
+# Theos Tweak开发 SSH访问iPhone时配置信息，或加到Tweak的Makefile中
+export THEOS_DEVICE_IP=127.0.0.1 #本机IP地址export
+export THEOS_DEVICE_PORT=2222   #本机端口号
+export THEOS_MAKE_PATH="$THEOS/makefiles"
+# Flutter
+export PATH="/opt/flutter/bin:$PATH"
+# Dart
+export PATH="$PATH":"$HOME/.pub-cache/bin"
+# jekyll editor
+export JEKYLL_EDITOR="open -a Typora"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 eval $(thefuck --alias)
+eval "$(scmpuff init -s)"
+# export PATH="/usr/local/opt/ruby/bin:$PATH"
+# export PATH="$HOME/.gem/ruby/2.6.0/bin:$PATH"
+#
+
+# Load rbenv automatically by appending
+# the following to ~/.zshrc:
+
+eval "$(rbenv init -)"
+eval "$(pyenv init -)"
+
+# ZSH Theme
+autoload -U promptinit; promptinit
+prompt pure
