@@ -1,3 +1,4 @@
+
 " vim setting
 
 function LoadBasicSettings()
@@ -44,104 +45,156 @@ function LoadBasicSettings()
     filetype indent on " load filetype-specific indent files
     filetype plugin indent on
 
+    " automatic Dart file type detection
+    au BufRead,BufNewFile *.dart set filetype=dart
+    "scss,sass
+    au BufRead,BufNewFile *.scss set filetype=scss
+    au BufRead,BufNewFile *.sass set filetype=scss
+
+    "let skim use slim syntax
+    au BufRead,BufNewFile *.skim set filetype=slim
+
 endfunction
 
 function LoadVimBundles()
     set rtp+=~/.vim/bundle/vundle/
     call vundle#rc()
 
-    " 包管理器
+    "> Package manager
+    """ Vundle, the plug-in manager for Vim
     Plugin 'gmarik/vundle'
 
-    " 状态栏增强
+    "> Status bar enhancement
+    """ lean & mean status/tabline for vim that's light as air
     Plugin 'vim-airline/vim-airline'
+    """ A collection of themes for vim-airline
     Plugin 'vim-airline/vim-airline-themes'
     
-    " 主题
+    "> Themes
+    """ one colorscheme pack to rule them all!
     Plugin 'flazz/vim-colorschemes'
+    """ Modern theme for modern VIMs
     Plugin 'ayu-theme/ayu-vim'
+    """ a blue-tinted winter vimscape (low-contrast vim theme/colorscheme)
+    Plugin 'nightsense/snow'                    
+    """ A light (and dark) color scheme for Vim inspired by iA Writer
+    Plugin 'reedes/vim-colors-pencil'
 
-    " 写作模式
-    Plugin 'junegunn/goyo.vim'
-
-    " 文本搜索，grep加强
-    Plugin 'ack.vim'
+    "> Search
+    """ Vim plugin for the_silver_searcher, 'ag'
     Plugin 'rking/ag.vim'
 
-    " 文件浏览
-    Plugin 'ctrlp.vim'
+    "> File explore
+    """ Active fork of kien/ctrlp.vim—Fuzzy file, buffer, mru, tag, etc finder.
+    Plugin 'kien/ctrlp.vim'
+    """ A tree explorer plugin for vim.
     Plugin 'scrooloose/nerdtree'
+    """ Vim plugin for intensely orgasmic commenting
     Plugin 'scrooloose/nerdcommenter'
+    """ Most Recently Used (MRU) Vim Plugin
     Plugin 'yegappan/mru'
-
-    " 自动补全
+    """ Perform all your vim insert mode completions with Tab
     Plugin 'ervandew/supertab'
+    """ A code-completion engine for Vim
     Plugin 'Valloric/YouCompleteMe'
+    """ TabNine AI code completion
+    " Plugin 'zxqfl/tabnine-vim'
+    """ UltiSnips - The ultimate snippet solution for Vim.
     Plugin 'SirVer/ultisnips'
+    """ vim-snipmate default snippets (Previously snipmate-snippets)
     Plugin 'honza/vim-snippets'
 
-    " 快速移动光标
+    """ Vim motions on speed!
     Plugin 'Lokaltog/vim-easymotion'
-    
-    " 注释代码
+    """ To Comment/Un-Comment single/multiple lines of code for different source files
     Plugin 'comments.vim'
-    
-    " 语法检测（貌似只针对C/C++）
+    """ Syntax checking hacks for vim
     Plugin 'scrooloose/syntastic'
-
+    """ CoffeeScript support for vim
     Plugin 'kchmck/vim-coffee-script'
+    """ fugitive.vim: A Git wrapper so awesome, it should be illegal
     Plugin 'tpope/vim-fugitive'
+    """ Vim runtime files for Haml, Sass, and SCSS
     Plugin 'tpope/vim-haml'
 
-    " JavaScript
+    "> JavaScript
+    """ Vastly improved Javascript indentation and syntax support in Vim.
     Plugin 'pangloss/vim-javascript'
+    """ Enhanced javascript syntax file for Vim
     Plugin 'jelera/vim-javascript-syntax'
-
+    """ A vim plugin for highlighting and indenting JST/EJS syntax
     Plugin 'briancollins/vim-jst'
-    " markdown
+
+    "> Markdown
+    """ Markdown Vim Mode
     Plugin 'plasticboy/vim-markdown'
+
+    """ Allows one to edit a file with prevledges from an unprivledged session.
     Plugin 'sudo.vim'
-    Plugin 'xml.vim'
-    Plugin 'ZenCoding.vim'
+    """ A vim plugin to display the indention levels with thin vertical lines
     Plugin 'Yggdroot/indentLine'
-
+    """ Hyperfocus-writing in Vim.
     Plugin 'junegunn/limelight.vim'
-
+    """ Highlight several words in different colors simultaneously.
     Plugin 'vim-scripts/Mark--Karkat'
+    """ Extra highlighting of typedefs, enumerations etc (based on ctags)
     Plugin 'vim-scripts/TagHighlight'
-
-    " Plugin 'drmingdrmer/xptemplate'
+    """ A (G)Vim plugin for exploring the source code definition(s) and contextual lines with a split window.
     Plugin 'wesleyche/SrcExpl'
+    """ Source code browser (supports C/C++, java, perl, python, tcl, sql, php, etc) 
     Plugin 'vim-scripts/taglist.vim'
+    """ Vim plugin that displays tags in a window, ordered by scope
     Plugin 'majutsushi/tagbar'
+    """ surround.vim: quoting/parenthesizing made simple
     Plugin 'tpope/vim-surround'
+    """ repeat.vim: enable repeating supported plugin maps with "."
     Plugin 'tpope/vim-repeat'
-
+    """ Vim's missing search
     Plugin 'mtth/locate.vim'
+    """ Vim script for text filtering and alignment
     Plugin 'godlygeek/tabular'
+    """ Insert or delete brackets, parens, quotes in pair.
     Plugin 'jiangmiao/auto-pairs'
-    Plugin 'reedes/vim-colors-pencil'
-    Plugin 'reedes/vim-pencil'
-
+    """ Miscellaneous auto-load Vim scripts
     Plugin 'xolox/vim-misc'
+    """ Automated tag file generation and syntax highlighting of tags in Vim
     Plugin 'xolox/vim-easytags'
+    """ Better Rainbow Parentheses
     Plugin 'kien/rainbow_parentheses.vim'
-
-    Plugin 'Shougo/vimshell.vim'
+    """ Interactive command execution in Vim.
     Plugin 'Shougo/vimproc.vim'
-
+    """ Gundo.vim is Vim plugin to visualize your Vim undo tree.
     Plugin 'sjl/gundo.vim'
-
-    Plugin 'dag/vim2hs'
-    Plugin 'msanders/cocoa.vim'
-
+    """ True Sublime Text style multiple selections for Vim
     Plugin 'terryma/vim-multiple-cursors'
+
+    "> Swift
+    """ Syntax and indent files for Swift
     Plugin 'keith/swift.vim'
+    """ Play with Swift code in Vim!
+    Plugin 'jerrymarino/SwiftPlayground.vim'
 
-    Plugin 'suan/vim-instant-markdown'
+    "> Dart
+    """ Syntax highlighting for Dart in Vim
+    Plugin 'dart-lang/dart-vim-plugin'
+    
+    "> Haskell
+    """ Vim to Haskell: A collection of vimscripts for Haskell development.
+    Plugin 'dag/vim2hs'
 
-    Plugin 'nightsense/snow'
+    "> HTML & CSS
+    """ vim plugins for HTML and CSS hi-speed coding.
+    Plugin 'ZenCoding.vim'
+    """ helps editing xml (and [x]html, sgml, xslt) files
+    Plugin 'xml.vim'
 
+    """ Run your code on-the-fly in Vim
+    Plugin '0x84/vim-coderunner'
+
+    "> Other
+    """ Syntax highlighting for Theos Logos
+    Plugin 'decrement/logos.vim' 
+    
 endfunction
 
 call LoadBasicSettings()
@@ -250,13 +303,6 @@ imap <D-1> <Esc>:tabprevious<CR>i
 :nmap <D-2> :tabnext<CR>
 :map <D-2> :tabnext<CR>
 imap <D-2> <Esc>:tabnext<CR>i
-
-"scss,sass
-au BufRead,BufNewFile *.scss set filetype=scss
-au BufRead,BufNewFile *.sass set filetype=scss
-
-"let skim use slim syntax
-au BufRead,BufNewFile *.skim set filetype=slim
 
 "ctags
 " set tags+=~/gitdb/rails/tags
@@ -463,3 +509,4 @@ endfunction
 
 call LoadTheme()
 
+:source ~/.vim/bundle/swift.vim/ftdetect/swift.vim
