@@ -36,6 +36,9 @@ function BasicSettings()
     " Complete options (disable preview scratch window, longest removed to aways show menu)
     set completeopt=menu,menuone
 
+    " Ctags
+    set tags=./.tags;,.tags
+
     filetype off                   " required!
     filetype indent on " Load filetype-specific indent files
     filetype plugin indent on
@@ -66,6 +69,9 @@ function PluginManager()
     call plug#begin("~/.vim/plugged")
     " 延迟按需加载，使用到命令的时候再加载或者打开对应文件类型才加载
 
+    " Themes
+    Plug 'sonph/onehalf', { 'rtp': 'vim' }
+
     " File explore
     "" A tree explorer plugin for vim.
     Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
@@ -78,9 +84,32 @@ function PluginManager()
 	"" Enhanced C and C++ syntax highlighting
  	Plug 'bfrg/vim-cpp-modern'
 
+    " Super tab
+    "" Use <Tab> for all your insert completion needs
+    Plug 'ervandew/supertab'
+
     " Auto complete
     "" A code-completion engine for Vim 
     Plug 'ycm-core/YouCompleteMe'
+
+    " Snippets
+    "" Engine: UltiSnips is the ultimate solution for snippets in Vim.
+    Plug 'SirVer/ultisnips'
+    "" Snippets files for various programming languages
+    Plug 'honza/vim-snippets'
+
+    " Indexing
+    "" Management of tags files in Vim.
+    Plug 'ludovicchabant/vim-gutentags'
+
+    "" Run shell commands asynchronously
+    Plug 'skywind3000/asyncrun.vim'
+    "" Comment stuff out
+    Plug 'tpope/vim-commentary'
+    "" Insert or delete brackets, parens, quotes in pair.
+    Plug 'jiangmiao/auto-pairs'
+    "" Displaying thin vertical lines at each indentation level.
+    Plug 'Yggdroot/indentLine'
 
     call plug#end()
 endfunction
@@ -100,6 +129,10 @@ endfunction
 function MRUConfig()
 endfunction
 
+function SuperTabConfig()
+    let g:SuperTabDefaultCompletionType = '<C-n>'
+endfunction
+
 function YouCompleteMeConfig()
     let g:ycm_add_preview_to_completeopt=0
     let g:ycm_show_diagnostics_ui=0
@@ -108,6 +141,8 @@ function YouCompleteMeConfig()
     let g:ycm_collect_identifiers_from_comments_and_strings=1
     let g:ycm_complete_in_strings=1
     let g:ycm_key_invoke_completion='<c-z>'
+    " 禁止自动引入头文件(不准)
+    let g:ycm_clangd_args=['--header-insertion=never']
     set completeopt=menu,menuone
 
     noremap <c-z> <NOP>
@@ -116,13 +151,125 @@ function YouCompleteMeConfig()
                 \ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
                 \ 'cs,lua,javascript': ['re!\w{2}'],
                 \ }
+
+    " 启用白名单机制，YCM补全默认只对下述文件类型开启，避免不必要的分析
+    let g:ycm_filetype_whitelist={
+                \ 'c': 1,
+                \ 'cpp': 1,
+                \ 'objc': 1,
+                \ 'javascript': 1,
+                \ 'sh': 1,
+                \ 'zsh': 1,
+                \ 'python': 1,
+                \ 'vim': 1,
+                \ }
+    " Make YCM compatible with UltiSnips (using supertab)
+    let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+    let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+    let g:SuperTabDefaultCompletionType = '<C-n>'
+
+    " Get rid of confirmation of ycm_extra_conf.py loading
+    let g:ycm_confirm_extra_conf = 0
+endfunction
+
+function UltiSnipsConfig()
+    " Better key bindings for UltiSnipsExpandTrigger
+    let g:UltiSnipsExpandTrigger = "<tab>"
+    let g:UltiSnipsJumpForwardTrigger = "<tab>"
+    let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+endfunction
+
+function GutentagsConfig()
+    " gutentags 搜索工程目录的标志，碰到这些文件/目录名就停止向上一级目录递归
+    let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
+
+    " 所生成的数据文件的名称
+    let g:gutentags_ctags_tagfile = '.tags'
+
+    " 将自动生成的 tags 文件全部放入 ~/.cache/tags 目录中，避免污染工程目录
+    let s:vim_tags = expand('~/.cache/tags')
+    let g:gutentags_cache_dir = s:vim_tags
+
+    " 配置 ctags 的参数
+    let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
+    let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
+    let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
+
+    " 检测 ~/.cache/tags 是否存在，不存在则创建
+    if !isdirectory(s:vim_tags)
+        silent! call mkdir(s:vim_tags, 'p')
+    endif
+endfunction
+
+function AsyncRunConfig()
+    " 自动打开 quickfix window ，高度为 6
+    let g:asyncrun_open = 6
+endfunction
+
+function CommentaryConfig()
+    " 为python和shell等添加注释
+    autocmd FileType python,shell,coffee set commentstring=#\ %s
+    " 修改注释风格
+    autocmd FileType java,c,cpp set commentstring=//\ %s
+endfunction
+
+function IndentLineConfig()
+    " ¦, ┆, │, ⎸
+    let g:indentLine_char = '│'  
 endfunction
 
 function PlugConfig()
     call NERDTreeConfig()
     call CtrlPConfig()
     call MRUConfig()
+    call SuperTabConfig()
     call YouCompleteMeConfig()
+    call UltiSnipsConfig()
+    call GutentagsConfig()
+    call AsyncRunConfig()
+    call CommentaryConfig()
+    call IndentLineConfig()
+endfunction
+
+function UIConfig()
+    syntax on
+    set t_Co=256
+    set cursorline
+    colorscheme onehalflight
+    " let g:airline_theme='onehalfdark'
+    " lightline
+    " let g:lightline = { 'colorscheme': 'onehalfdark' }
+endfunction
+
+function StatusLineConfig()
+    " 显示状态行当前设置
+    " set statusline
+
+    " 设置状态行显示常用信息
+    " %F 完整文件路径名
+    " %m 当前缓冲被修改标记
+    " %m 当前缓冲只读标记
+    " %h 帮助缓冲标记
+    " %w 预览缓冲标记
+    " %Y 文件类型
+    " %b ASCII值
+    " %B 十六进制值
+    " %l 行数
+    " %v 列数
+    " %p 当前行数占总行数的的百分比
+    " %L 总行数
+    " %{...} 评估表达式的值，并用值代替
+    " %{"[fenc=".(&fenc==""?&enc:&fenc).((exists("+bomb") && &bomb)?"+":"")."]"} 显示文件编码
+    " %{&ff} 显示文件类型
+    " set statusline=%F
+    " set statusline+=%m%r%h%w=\ 
+    " set statusline+=[ft=%Y]
+    set statusline=%F%m%r%h%w%=\ [ft=%y]\ %{\"[fenc=\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\"+\":\"\").\"]\"}\ [ff=%{&ff}]\ [asc=%03.3b]\ [hex=%02.2B]\ [pos=%04l,%04v][%p%%]\ [len=%L]
+
+    " 设置 laststatus = 0 ，不显式状态行
+    " 设置 laststatus = 1 ，仅当窗口多于一个时，显示状态行
+    " 设置 laststatus = 2 ，总是显式状态行
+    set laststatus=2
 endfunction
 
 " It's where it all beagn.
@@ -131,6 +278,8 @@ function Main()
     call KeybindingsRemapping()
     call PluginManager()
     call PlugConfig()
+    call UIConfig()
+    call StatusLineConfig()
 endfunction
 
 call Main()
